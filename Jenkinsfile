@@ -1,7 +1,5 @@
 #!/usr/bin/env groovy
 
-
-
 node('devx-slave-shared') {
     checkout scm
 
