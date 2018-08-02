@@ -26,21 +26,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.mulesoft.mozart.modules</groupId>
-            <artifactId>platform-test-utils</artifactId>
-            <version>${mozart.services.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.mulesoft.mozart</groupId>
             <artifactId>alexander-learner-client</artifactId>
             <version>1.0.0-SNAPSHOT</version>
