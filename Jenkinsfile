@@ -1,6 +1,22 @@
 #!/usr/bin/env groovy
+final PIPELINE_ENV = 'PIPELINE_ENV'
 
-node('devx-slave-shared') {
+final DEFAULT_PIPELINE_ENV = 'devx'
+
+def pipelineProperties = [
+    parameters([
+        string(
+            name: ANYPOINT_ENVIRONMENT,
+            description: 'Environment to be tested',
+            defaultValue: DEFAULT_PIPELINE_ENV
+        ),
+    ])
+]
+
+def pipelineEnv = env[PIPELINE_ENV] ?: DEFAULT_PIPELINE_ENV
+
+
+node('${pipelineEnv}-slave-shared') {
     checkout scm
 
     def version = ""
@@ -59,7 +75,7 @@ node('devx-slave-shared') {
             sh "mvn -s ${env.MAVEN_SETTINGS_PATH} -U -Daether.connector.resumeDownloads=false verify \
             -DENABLE_USER_SETTINGS_PATH=TRUE \
             -Pintegration-tests \
-            -Dmozart.environment=devx"
+            -Dmozart.environment=${pipelineEnv}"
           }
         }
 
