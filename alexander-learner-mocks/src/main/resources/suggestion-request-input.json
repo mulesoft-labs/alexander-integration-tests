@@ -1,0 +1,25 @@
+{
+  "expected": [
+    "/[]/airline",
+    "/[]/flightCode",
+    "/[]/fromAirportCode",
+    "/[]/toAirportCode",
+    "/[]/departureDate",
+    "/[]/emptySeats",
+    "/[]/totalSeats",
+    "/[]/price",
+    "/[]/planeType"
+  ],
+  "incoming": [
+    "/payload/body/listAllFlightsResponse/*return/airlineName",
+    "/payload/body/listAllFlightsResponse/*return/code",
+    "/payload/body/listAllFlightsResponse/*return/departureDate",
+    "/payload/body/listAllFlightsResponse/*return/destination",
+    "/payload/body/listAllFlightsResponse/*return/emptySeats",
+    "/payload/body/listAllFlightsResponse/*return/origin",
+    "/payload/body/listAllFlightsResponse/*return/planeType",
+    "/payload/body/listAllFlightsResponse/*return/price",
+    "/attributes/protocolHeaders"
+  ],
+  "modelVersion": "deepModels/FastText/v0"
+}
