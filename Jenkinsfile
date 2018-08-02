@@ -72,7 +72,6 @@ node('devx-slave-shared') {
 
         stage("Test Reports") {
             junit '**/target/surefire-reports/*.xml'
-            junit '**/target/failsafe-reports/*.xml'
         }
     }
 }

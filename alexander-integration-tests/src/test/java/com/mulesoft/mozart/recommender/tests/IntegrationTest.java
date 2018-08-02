@@ -24,7 +24,7 @@ public class IntegrationTest {
             .connect(AlexanderEnvironmentConfiguration.getConfiguration().getProperty("recommender-api-url"), 2000, 40000);
 
     @Test(timeout = 40000)
-    public void canStoreInitialSuggestion() throws Exception {
+    public void fitAndPredict() throws Exception {
         String targetDirectory = "integration-tests/" + UUID.randomUUID().toString();
         logger.info("Using directory {} ", targetDirectory);
         FitResponse fitResponse = alexanderLearnerAPI.fit(targetDirectory)
