@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mulesoft.mozart</groupId>
+    <artifactId>alexander-integration-tests-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>alexander-learner-client</module>
+                <module>alexander-rest-model</module>
+                <module>alexander-learner-mocks</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>integration-tests</id>
+            <modules>
+                <module>alexander-integration-tests</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <!-- Mozart Dependencies references -->
+        <mozart.services.version>1.5.0-SNAPSHOT</mozart.services.version>
+    </properties>
+
+    <scm>
+        <connection>scm:git:https://github.com/mulesoft-labs/alexander-integration-tests.git</connection>
+        <url>https://github.com/mulesoft-labs/alexander-integration-tests</url>
+        <developerConnection>scm:git:git@github.com:mulesoft-labs/alexander-integration-tests.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.mulesoft.mozart</groupId>
+            <artifactId>test-categories</artifactId>
+            <version>${mozart.services.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>mule-ee-releases</id>
+            <name>MuleSoft Release Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>mule-ee-snapshots</id>
+            <name>MuleSoft Snapshot Repository</name>
+            <url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-snapshots/</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
