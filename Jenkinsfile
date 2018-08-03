@@ -3,7 +3,7 @@ final ANYPOINT_ENVIRONMENT = 'PIPELINE_ENV'
 
 final DEFAULT_PIPELINE_ENV = 'devx'
 
-properties = [(
+properties([(
     parameters([
         string(
             name: 'ANYPOINT_ENVIRONMENT',
@@ -11,7 +11,7 @@ properties = [(
             defaultValue: DEFAULT_PIPELINE_ENV
         ),
     ])
-)]
+)])
 
 def pipelineEnv = env[ANYPOINT_ENVIRONMENT] ?: DEFAULT_PIPELINE_ENV
 
