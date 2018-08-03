@@ -10,13 +10,14 @@ def AGENT_LABEL = ""
 
 def pipelineEnv = ""
 
+def triggerCron = '0 */2 * * *'
+
 node {
 
     //Maven Properties
     def mvnHome = tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'
     def jdkHome = tool name: 'Java 8', type: 'hudson.model.JDK'
 
-    def triggerCron = (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') ? '0 */2 * * *' : ''
 
     properties([
                     [
@@ -50,10 +51,32 @@ node {
 }
 
 node("${AGENT_LABEL}") {
+
+properties([
+                    [
+                        $class: 'BuildDiscarderProperty',
+                        strategy: [
+                            $class: 'LogRotator',
+                            artifactDaysToKeepStr: '',
+                            artifactNumToKeepStr: '',
+                            daysToKeepStr: '',
+                            numToKeepStr: '10'
+                        ]
+                    ],
+                    pipelineTriggers([cron(triggerCron)]),
+                    parameters([
+                                string(
+                                    name: ANYPOINT_ENVIRONMENT,
+                                    description: 'Environment to be tested',
+                                    defaultValue: DEFAULT_PIPELINE_ENV
+                                ),
+                    ])
+                ]);
+
     checkout scm
 
     def version = ""
-    def triggerCron = (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') ? '0 */2 * * *' : ''
+    triggerCron = (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') ? '0 */2 * * *' : ''
 
     name = "alexander-integration-tests"
 
@@ -62,7 +85,14 @@ node("${AGENT_LABEL}") {
     def jdkHome = tool name: 'Java 8', type: 'hudson.model.JDK'
 
     properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']],
-                pipelineTriggers([cron(triggerCron)])
+                pipelineTriggers([cron(triggerCron)]),
+                 parameters([
+                             string(
+                                 name: ANYPOINT_ENVIRONMENT,
+                                 description: 'Environment to be tested',
+                                 defaultValue: DEFAULT_PIPELINE_ENV
+                             ),
+                 ])
                 ]);
 
     withCredentials([
