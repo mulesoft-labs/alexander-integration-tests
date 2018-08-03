@@ -1,22 +1,55 @@
 #!/usr/bin/env groovy
-final ANYPOINT_ENVIRONMENT = 'PIPELINE_ENV'
+
+name = "alexander-integration-tests"
+
+final ANYPOINT_ENVIRONMENT = 'ANYPOINT_ENVIRONMENT'
 
 final DEFAULT_PIPELINE_ENV = 'devx'
 
-properties([(
-    parameters([
-        string(
-            name: 'ANYPOINT_ENVIRONMENT',
-            description: 'Environment to be tested',
-            defaultValue: DEFAULT_PIPELINE_ENV
-        ),
-    ])
-)])
+def AGENT_LABEL = ""
 
-def pipelineEnv = env[ANYPOINT_ENVIRONMENT] ?: DEFAULT_PIPELINE_ENV
+def pipelineEnv = ""
 
+node {
 
-node(pipelineEnv + '-slave-shared') {
+    //Maven Properties
+    def mvnHome = tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'
+    def jdkHome = tool name: 'Java 8', type: 'hudson.model.JDK'
+
+    def triggerCron = (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'develop') ? '0 */2 * * *' : ''
+
+    properties([
+                    [
+                        $class: 'BuildDiscarderProperty',
+                        strategy: [
+                            $class: 'LogRotator',
+                            artifactDaysToKeepStr: '',
+                            artifactNumToKeepStr: '',
+                            daysToKeepStr: '',
+                            numToKeepStr: '10'
+                        ]
+                    ],
+                    pipelineTriggers([cron(triggerCron)]),
+                    parameters([
+                                string(
+                                    name: ANYPOINT_ENVIRONMENT,
+                                    description: 'Environment to be tested',
+                                    defaultValue: DEFAULT_PIPELINE_ENV
+                                ),
+                    ])
+                ]);
+
+    stage('Check parameters') {
+        echo "environment by param: ${params.ANYPOINT_ENVIRONMENT}"
+        pipelineEnv = params.ANYPOINT_ENVIRONMENT ?: DEFAULT_PIPELINE_ENV
+        AGENT_LABEL = "${pipelineEnv}-slave-shared"
+
+        echo "Using agent ${AGENT_LABEL}"
+    }
+
+}
+
+node("${AGENT_LABEL}") {
     checkout scm
 
     def version = ""
@@ -75,7 +108,7 @@ node(pipelineEnv + '-slave-shared') {
             sh "mvn -s ${env.MAVEN_SETTINGS_PATH} -U -Daether.connector.resumeDownloads=false verify \
             -DENABLE_USER_SETTINGS_PATH=TRUE \
             -Pintegration-tests \
-            -Dmozart.environment=" + pipelineEnv
+            -Dmozart.environment=${pipelineEnv}"
           }
         }
 
