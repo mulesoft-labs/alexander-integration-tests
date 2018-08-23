@@ -12,7 +12,7 @@
     <artifactId>alexander-integration-tests</artifactId>
 
     <properties>
-        <mozart.services.version>1.5.0-SNAPSHOT</mozart.services.version>
+        <mozart.services.version>1.5.0</mozart.services.version>
         <mozart.environment>local</mozart.environment>
         <aspectj.version>1.8.10</aspectj.version>
         <recommender.api.version>1.0.0</recommender.api.version>
