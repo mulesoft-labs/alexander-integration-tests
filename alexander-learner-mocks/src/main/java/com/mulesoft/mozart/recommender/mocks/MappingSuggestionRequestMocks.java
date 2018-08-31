@@ -8,7 +8,8 @@ import java.io.IOException;
 
 public enum MappingSuggestionRequestMocks {
 
-    SIMPLE_SUGGESTION("suggestion-request-input.json");
+    SIMPLE_SUGGESTION("suggestion-request-input.json"),
+    SIMPLE_USE_CASE("simple-use-case-request-input.json");
 
     private final String requestInput;
 
