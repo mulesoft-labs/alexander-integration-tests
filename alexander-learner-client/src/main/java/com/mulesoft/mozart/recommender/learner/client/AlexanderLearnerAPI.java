@@ -20,11 +20,11 @@ public interface AlexanderLearnerAPI {
     @RequestLine("GET /api/v1/fit/status")
     Single<FitResponse> fitStatus();
 
-    static AlexanderLearnerAPI connect(String baseUrl, Integer connectTimeout, Integer readTimeout){
+    static AlexanderLearnerAPI connect(String baseUrl, Integer connectTimeout, Integer readTimeout) {
         return connect(baseUrl, connectTimeout, readTimeout, new OkHttpClient());
     }
 
-    static AlexanderLearnerAPI connect(String baseUrl, Integer connectTimeout, Integer readTimeout, Client client){
+    static AlexanderLearnerAPI connect(String baseUrl, Integer connectTimeout, Integer readTimeout, Client client) {
         return RxJavaFeign.builder()
                 .retryer(Retryer.NEVER_RETRY)
                 .client(client)
