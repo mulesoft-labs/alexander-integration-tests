@@ -10,6 +10,8 @@ def AGENT_LABEL = ""
 
 def pipelineEnv = ""
 
+def testEnv = "kdev"
+
 def triggerCron = '0 */2 * * *'
 
 node {
@@ -138,7 +140,7 @@ properties([
             sh "mvn -s ${env.MAVEN_SETTINGS_PATH} -U -Daether.connector.resumeDownloads=false verify \
             -DENABLE_USER_SETTINGS_PATH=TRUE \
             -Pintegration-tests \
-            -Dmozart.environment="kdev""
+            -Dmozart.environment=${testEnv}"
           }
         }
 
