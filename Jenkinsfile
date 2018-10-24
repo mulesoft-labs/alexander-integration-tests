@@ -4,7 +4,7 @@ name = "alexander-integration-tests"
 
 final ANYPOINT_ENVIRONMENT = 'ANYPOINT_ENVIRONMENT'
 
-final DEFAULT_PIPELINE_ENV = 'kdev'
+final DEFAULT_PIPELINE_ENV = 'devx'
 
 def AGENT_LABEL = ""
 
