@@ -138,7 +138,7 @@ properties([
             sh "mvn -s ${env.MAVEN_SETTINGS_PATH} -U -Daether.connector.resumeDownloads=false verify \
             -DENABLE_USER_SETTINGS_PATH=TRUE \
             -Pintegration-tests \
-            -Dmozart.environment=${pipelineEnv}"
+            -Dmozart.environment="kdev""
           }
         }
 
