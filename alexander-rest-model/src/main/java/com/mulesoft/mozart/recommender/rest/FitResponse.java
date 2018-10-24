@@ -14,9 +14,10 @@ public class FitResponse {
     @Getter
     @Setter
     public static class Score {
-        double[] val_loss;
+        String algorithm;
+        double[] acc;
         double[] val_acc;
         double[] loss;
-        double[] acc;
+        double[] val_loss;
     }
 }
